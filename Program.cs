@@ -16,7 +16,8 @@ namespace MultiFaceRec
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new CardReader());
+            //Application.Run(new CardReader());
+            Application.Run(new StandbyForm());
         }
     }
 }
