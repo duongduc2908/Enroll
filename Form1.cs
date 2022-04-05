@@ -14,24 +14,31 @@ using Emgu.CV.CvEnum;
 using System.IO;
 using System.Threading;
 using System.Diagnostics;
+using MultiFaceRec.Shared;
+using System.Net;
+using System.Net.Sockets;
 
 namespace MultiFaceRec
 {
     public partial class Form1 : Form
     {
         #region Variables
+        public string profile;
         private Capture videoCapture = null;
         private Image<Bgr, Byte> currentFrame = null;
         Mat frame = new Mat();
         private bool facesDetectionEnabled = false;
-        CascadeClassifier faceCasacdeClassifier = new CascadeClassifier(@"C:\Users\haint\Desktop\Enroll\haarcascade_frontalface_alt.xml");
+        CascadeClassifier faceCasacdeClassifier = new CascadeClassifier(@"C:\Users\haint\Documents\CODE\Enroll\haarcascade_frontalface_alt.xml");
         #endregion
-
         public Form1()
         {
             InitializeComponent();
         }
 
+        public void Demo()
+        {
+
+        }
         private void btnCapture_Click(object sender, EventArgs e)
         {
             //Dispose of Capture if it was created before
@@ -94,5 +101,6 @@ namespace MultiFaceRec
         {
             facesDetectionEnabled = true;
         }
+
     }
 }
