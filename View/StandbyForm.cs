@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MultiFaceRec.View;
 
 namespace MultiFaceRec
 {
@@ -26,6 +27,8 @@ namespace MultiFaceRec
 
             InitVideo();
             InitPinLogo();
+
+            Control.CheckForIllegalCrossThreadCalls = false;
         }
 
         private void InitPinLogo()
@@ -133,14 +136,13 @@ namespace MultiFaceRec
                 return;
             }
             // valid and navigate to enroll
-            Form enrollForm = new Form1();
+            CardReader enrollForm = new CardReader();
             enrollForm.Show();
-            this.Close();
+
+            panel1.Dispose();
+            this.Hide();    
         }
 
-
-
-       
         private void button1_Click(object sender, EventArgs e)
         {
             handlePinEnter("1");
