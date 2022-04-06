@@ -22,29 +22,5 @@ namespace MultiFaceRec.Properties {
                 return defaultInstance;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string video_input {
-            get {
-                return ((string)(this["video_input"]));
-            }
-            set {
-                this["video_input"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string primary_server {
-            get {
-                return ((string)(this["primary_server"]));
-            }
-            set {
-                this["primary_server"] = value;
-            }
-        }
     }
 }
