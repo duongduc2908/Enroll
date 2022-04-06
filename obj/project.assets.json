@@ -2,6 +2,15 @@
   "version": 3,
   "targets": {
     ".NETFramework,Version=v4.8": {
+      "DirectShowLib/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/DirectShowLib.dll": {}
+        },
+        "runtime": {
+          "lib/DirectShowLib.dll": {}
+        }
+      },
       "EmguCV/3.1.0.1": {
         "type": "package",
         "dependencies": {
@@ -227,6 +236,15 @@
       }
     },
     ".NETFramework,Version=v4.8/win": {
+      "DirectShowLib/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/DirectShowLib.dll": {}
+        },
+        "runtime": {
+          "lib/DirectShowLib.dll": {}
+        }
+      },
       "EmguCV/3.1.0.1": {
         "type": "package",
         "dependencies": {
@@ -408,6 +426,15 @@
       }
     },
     ".NETFramework,Version=v4.8/win-x64": {
+      "DirectShowLib/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/DirectShowLib.dll": {}
+        },
+        "runtime": {
+          "lib/DirectShowLib.dll": {}
+        }
+      },
       "EmguCV/3.1.0.1": {
         "type": "package",
         "dependencies": {
@@ -589,6 +616,15 @@
       }
     },
     ".NETFramework,Version=v4.8/win-x86": {
+      "DirectShowLib/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/DirectShowLib.dll": {}
+        },
+        "runtime": {
+          "lib/DirectShowLib.dll": {}
+        }
+      },
       "EmguCV/3.1.0.1": {
         "type": "package",
         "dependencies": {
@@ -771,6 +807,19 @@
     }
   },
   "libraries": {
+    "DirectShowLib/1.0.0": {
+      "sha512": "oWwOk9Lj8JIMWPsfx8bUbJ/uWhHlRKpMaU5oVf8Kl9SLMhmrnr0kXg0ebDv3oOmKxZ/D1yrmw+x7UGmgMqUxFA==",
+      "type": "package",
+      "path": "directshowlib/1.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "directshowlib.1.0.0.nupkg.sha512",
+        "directshowlib.nuspec",
+        "lib/DirectShowLib.dll",
+        "lib/DirectShowLib.pdb"
+      ]
+    },
     "EmguCV/3.1.0.1": {
       "sha512": "xiYFPDqGeHsMQLhY/GLgBwduIyAJuGug4T1X0lhQ4JbdPgPcR9P2lk5HTQ8npLLFVdvNPGLLzQGYxksy2jq52Q==",
       "type": "package",
@@ -1261,6 +1310,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETFramework,Version=v4.8": [
+      "DirectShowLib >= 1.0.0",
       "EmguCV >= 3.1.0.1",
       "Newtonsoft.Json >= 13.0.1",
       "System.Net.Http >= 4.3.4"
@@ -1299,6 +1349,10 @@
     "frameworks": {
       "net48": {
         "dependencies": {
+          "DirectShowLib": {
+            "target": "Package",
+            "version": "[1.0.0, )"
+          },
           "EmguCV": {
             "target": "Package",
             "version": "[3.1.0.1, )"

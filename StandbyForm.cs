@@ -8,7 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using MultiFaceRec.Shared;
+using DirectShowLib;
 namespace MultiFaceRec
 {
     public partial class StandbyForm : Form
@@ -19,13 +20,89 @@ namespace MultiFaceRec
         public string pinCode = "";
         public StandbyForm()
         {
-
+            this.StartPosition = FormStartPosition.Manual;
+            this.Location = new Point(0, 0);
+            this.WindowState = FormWindowState.Maximized;
             InitializeComponent();
             InitScreen();
             InitPanelBackdrop();
 
             InitVideo();
             InitPinLogo();
+            InitLabelMarquee();
+            InitPanelSetting();
+            InitComboBox();
+        }
+
+        private void InitComboBox()
+        {
+            comboBoxServer.DropDownStyle = ComboBoxStyle.DropDownList;
+            ComboBoxSetting item1 = new ComboBoxSetting();
+            item1.Value = "http://10.142.10.197:8080";
+            item1.Text = "Hạ Long - " + item1.Value;
+
+            ComboBoxSetting item2 = new ComboBoxSetting();
+            item2.Value = "http://10.210.50.92:8080";
+            item2.Text = "Phú Quốc - " + item1.Value;
+
+            ComboBoxSetting item3 = new ComboBoxSetting();
+            item3.Value = "http://10.204.60.45:8080";
+            item3.Text = "Nha Trang - " + item1.Value;
+
+            ComboBoxSetting item4 = new ComboBoxSetting();
+            item4.Value = "http://10.212.190.95:8080";
+            item4.Text = "Nam Hội An - " + item1.Value;
+
+            var listServer = new List<ComboBoxSetting>();
+            listServer.Add(item1);
+            listServer.Add(item2);
+            listServer.Add(item3);
+            listServer.Add(item4);
+            string savedPrimaryServer = Properties.Settings.Default.primary_server.ToString();
+            for (int i = 0; i < listServer.Count; i++)
+            {
+                comboBoxServer.Items.Add(listServer[i]);
+                if (listServer[i].Value.ToString() == savedPrimaryServer)
+                {
+                    comboBoxServer.SelectedIndex = i;
+                }
+            }
+
+            
+
+
+            var devices = new List<DsDevice>(DsDevice.GetDevicesOfCat(FilterCategory.VideoInputDevice));
+            foreach (var device in devices)
+            { 
+                ComboBoxSetting item = new ComboBoxSetting();
+                item.Text = device.Name;
+                item.Value = device.ClassID;
+                comboBoxCamera.Items.Add(item);
+
+                string savedVideoInput = Properties.Settings.Default.video_input.ToString();
+                if (savedVideoInput == device.ClassID.ToString())
+                {
+                    comboBoxCamera.SelectedIndex = comboBoxCamera.FindStringExact(device.Name);
+                }
+            }
+        }
+
+        private void InitPanelSetting()
+        {
+            panelSetting.Visible = false;
+            panelSetting.Location = new Point(
+               (Width - panelSetting.Size.Width) / 2,
+               (Height - panelSetting.Size.Height) / 2);
+        }
+
+        private void InitLabelMarquee()
+        {
+            string space = "                  ";
+            string txt = "Welcome to Vinpearl"+ space+"欢 迎 来 到 Vinpearl" + space + "Chào mừng bạn đến với Vinpearl" + space + "добро пожаловать в Vinpearl" + space + "ようこそ Vinpearlへ";
+            labelMarquee.Text = txt.ToUpper();
+            labelMarquee.Top = 10;
+            timer1.Enabled = true;
+            timer1.Interval = 20;
         }
 
         private void InitPinLogo()
@@ -35,6 +112,12 @@ namespace MultiFaceRec
 
             pictureBox2.ImageLocation = getPathSrc("close.png");
             pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
+
+            pictureBox3.ImageLocation = getPathSrc("logo-white.png");
+            pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
+
+            pictureBox4.ImageLocation = getPathSrc("close.png");
+            pictureBox4.SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
         private string getPathSrc(string file)
@@ -63,7 +146,7 @@ namespace MultiFaceRec
 
         private void InitVideo()
         {
-            adVideoPlayer.URL = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\")).ToString() + "Resources\\vinpearl-ad.mp4";
+            adVideoPlayer.URL = getPathSrc("vinpearl-ad.mp4");
             adVideoPlayer.settings.autoStart = true;
             adVideoPlayer.Height = Height;
             adVideoPlayer.Width = Width;
@@ -91,9 +174,22 @@ namespace MultiFaceRec
             panel1.Visible = isPinModalOpen;
         }
 
+
         private void adVideoPlayer_Click(object sender, AxWMPLib._WMPOCXEvents_ClickEvent e)
         {
-            togglePinModelVisible();
+            if(panelSetting.Visible)
+            {
+                toggleSettingModelOpen();
+            }
+            else if(panel1.Visible)
+            {
+                togglePinModelVisible();
+            }
+            else
+            {
+                togglePinModelVisible();
+
+            }
         }
 
         private void adVideoPlayer_DbClick(object sender, AxWMPLib._WMPOCXEvents_DoubleClickEvent e)
@@ -203,6 +299,46 @@ namespace MultiFaceRec
         private void pictureBox2_Click(object sender, EventArgs e)
         {
             togglePinModelVisible();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if(labelMarquee.Left < 0 && Math.Abs(labelMarquee.Left) > labelMarquee.Width )
+            {
+                labelMarquee.Left = this.Width;
+            }
+            labelMarquee.Left -= 2;
+        }
+
+        private void pictureBox3_Click(object sender, EventArgs e)
+        {
+            toggleSettingModelOpen();
+            if (panel1.Visible)
+            {
+                togglePinModelVisible();
+            }
+        }
+
+        private void toggleSettingModelOpen()
+        {
+           
+            panelSetting.Visible = !panelSetting.Visible;
+        }
+
+        private void pictureBox4_Click(object sender, EventArgs e)
+        {
+            toggleSettingModelOpen();
+        }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
+            string cameraId = (comboBoxCamera.SelectedItem as ComboBoxSetting).Value.ToString();
+            Properties.Settings.Default["video_input"] = cameraId;
+
+            string serverUrl = (comboBoxServer.SelectedItem as ComboBoxSetting).Value.ToString();
+            Properties.Settings.Default["primary_server"] = serverUrl;
+
+            Properties.Settings.Default.Save();
         }
     }
 }
