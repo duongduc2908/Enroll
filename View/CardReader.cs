@@ -15,6 +15,8 @@ namespace MultiFaceRec.View
     {
         public CardReader()
         {
+            InitializeComponent();
+
             var cts = new CancellationTokenSource();
 
             RT(100, cts.Token);
@@ -22,8 +24,6 @@ namespace MultiFaceRec.View
             Console.ReadLine();
 
             cts.Cancel();
-
-            InitializeComponent();
 
             Control.CheckForIllegalCrossThreadCalls = false;
         }

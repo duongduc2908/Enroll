@@ -8,8 +8,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+<<<<<<< HEAD:StandbyForm.cs
 using MultiFaceRec.Shared;
 using DirectShowLib;
+=======
+using MultiFaceRec.View;
+
+>>>>>>> 1b47bfd7f022840c17f5776ec831030bf07f2e04:View/StandbyForm.cs
 namespace MultiFaceRec
 {
     public partial class StandbyForm : Form
@@ -29,6 +34,7 @@ namespace MultiFaceRec
 
             InitVideo();
             InitPinLogo();
+<<<<<<< HEAD:StandbyForm.cs
             InitLabelMarquee();
             InitPanelSetting();
             InitComboBox();
@@ -103,6 +109,10 @@ namespace MultiFaceRec
             labelMarquee.Top = 10;
             timer1.Enabled = true;
             timer1.Interval = 20;
+=======
+
+            Control.CheckForIllegalCrossThreadCalls = false;
+>>>>>>> 1b47bfd7f022840c17f5776ec831030bf07f2e04:View/StandbyForm.cs
         }
 
         private void InitPinLogo()
@@ -229,14 +239,13 @@ namespace MultiFaceRec
                 return;
             }
             // valid and navigate to enroll
-            Form enrollForm = new Form1();
+            CardReader enrollForm = new CardReader();
             enrollForm.Show();
-            this.Close();
+
+            panel1.Dispose();
+            this.Hide();    
         }
 
-
-
-       
         private void button1_Click(object sender, EventArgs e)
         {
             handlePinEnter("1");
